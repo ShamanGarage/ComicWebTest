@@ -1,0 +1,82 @@
+body {
+    left: 5%;
+    right: 10%;
+    margin: 0 auto;
+    width: 75%;
+    padding: 0 20px 20px 20px;
+}
+
+.interface {
+    overflow: hidden;
+    position: fixed;
+    height: 25%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.parent{
+  position: relative;
+  height: 512px;
+  width: 1024px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.panel {
+    position: absolute;
+    max-width: 100%;
+    opacity: 0%;
+    z-index: 0;
+}
+
+.dragable {
+    position: absolute;
+    opacity: 0%;
+    z-index: 1;
+}
+
+.trigger {
+    position: absolute;
+    opacity: 0%;
+    z-index: -1;
+}
+
+.drag_area
+{
+    position: absolute;
+    opacity: 0%;
+    z-index: -1;
+}
+
+.upperUx {
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    left: 0;
+    width: 100%; /* Full width */
+    height: 20%;
+}
+.sideBar{
+    left:0;
+    top: 40%;
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 20%;
+}
+
+.interface_elem
+{
+    display: inline-block;
+    max-height: 100%;
+}
+
+.navDot
+{
+    position: absolute;
+}
+
+
+
