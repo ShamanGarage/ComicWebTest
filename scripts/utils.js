@@ -115,18 +115,16 @@ function set_opacity_tr(thisTr, next_trigger, opacity_lvl, nb_clicks, panel_id)
         }
 }
 
-function set_image_sequence_tr(thisTr, next_trigger, imgLst, nbImg, index)
+function set_image_sequence_tr(thisTr, next_trigger, imgFolder, imgLst, nbImg, index, img_to_change)
 {
-        index = 1
+        index = 0
         thisTr.action =  function()
         {
             if (thisTr.active)
             {
                 if (index < nbImg)
                 {
-                    getElem(imgLst[index]).style.opacity = "100%"
-                    if (index > 0)
-                        getElem(imgLst[index -1]).style.opacity = "0%"
+                    img_to_change.src = imgFolder + imgLst[index]
                     index += 1
                 }
                 if (index >= nbImg)
@@ -176,7 +174,7 @@ function reset_adventure(adv_id)
     cubeTr.set_active(true)
 }
 
-function dragElement(elmnt, parent, moving_img_url) {
+function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination, snap, drop_function) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var old_url = elmnt.src;
     var top_percent;
@@ -234,10 +232,51 @@ function dragElement(elmnt, parent, moving_img_url) {
       left_percent = (posLeft - parent.offsetLeft)/parent.clientWidth;
     }
 
+    function checkDestination()
+    {
+        if (destination)
+        {
+            let is_the_end = elmnt.offsetTop >= destination.offsetTop - 2;
+            console.log(is_the_end)
+            is_the_end = is_the_end && elmnt.offsetLeft >= destination.offsetLeft - 2;
+            console.log(is_the_end)
+            is_the_end = is_the_end && elmnt.offsetTop <= (destination.offsetTop + destination.clientHeight)
+            console.log(is_the_end)
+            is_the_end = is_the_end && elmnt.offsetLeft <= (destination.offsetLeft + destination.clientWidth);
+            console.log(is_the_end)
+
+            if (is_the_end)
+            {
+                if (document.getElementById(elmnt.id + "_header")) {
+                    // if present, the header is where you move the DIV from:
+                    document.getElementById(elmnt.id + "_header").onmousedown = null;
+                }
+                else {
+                    // otherwise, move the DIV from anywhere inside the DIV:
+                    elmnt.onmousedown = null;
+                }
+                elmnt.src = dropped_img_url;
+                if (snap)
+                {
+                    elmnt.style.marginTop = destination.offsetTop + "px";
+                    elmnt.style.marginLeft =  destination.offsetLeft + "px";
+                    top_percent = (posTop - parent.offsetTop)/parent.clientHeight;
+                    left_percent = (posLeft - parent.offsetLeft)/parent.clientWidth;
+                }
+                drop_function()
+            }
+            return (is_the_end)
+
+        }
+        return (false)
+    }
+
     function closeDragElement() {
-        elmnt.src = old_url;
+        if (!checkDestination())
+            elmnt.src = old_url;
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
+        checkDestination();
     }
 }
