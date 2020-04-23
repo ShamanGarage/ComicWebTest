@@ -95,18 +95,18 @@ function all_true(list)
 
 function set_opacity_tr(thisTr, next_trigger, opacity_lvl, nb_clicks, panel_id)
 {
-        opacity_lvl = 0;
+        opacity_lvl = 100;
         thisTr.set_active(true);
         thisTr.action =  function()
         {
             if (thisTr.active)
             {
-                if (opacity_lvl < 100)
+                if (opacity_lvl > 0)
                 {
-                    opacity_lvl += 100/nb_clicks;
+                    opacity_lvl -= 100/nb_clicks;
                     getElem(panel_id).style.opacity = opacity_lvl.toString() + "%"
                 }
-                if (opacity_lvl >= 100)
+                if (opacity_lvl <= 0)
                 {
                     thisTr.set_active(false)
                     next_trigger.set_active(true)
@@ -140,8 +140,8 @@ function save_adventure(adventureName)
     {
         console.log("Saving adventure")
         var canvas = document.createElement('canvas');
-        canvas.width = 2613;
-        canvas.height = 7596;
+        canvas.width = 1045;
+        canvas.height = 3346;
         let context =  canvas.getContext("2d");
         bg = getElem("BG")
         context.drawImage(getElem("BG"),0,0)
@@ -156,11 +156,12 @@ function save_adventure(adventureName)
                     posx =  ((element.offsetLeft - bg.offsetLeft)/bg.clientWidth)*canvas.width
                     posy =  ((element.offsetTop - bg.offsetTop)/bg.clientHeight)*canvas.height
                     context.drawImage(element, posx, posy)
+                    console.log(element.id + " loaded")
                 }
             }
         });
         var url = canvas.toDataURL('image/png');
-        window.open(url)
+        return url;
     }
 
 function reset_adventure(adv_id)
@@ -172,6 +173,7 @@ function reset_adventure(adv_id)
     }
     getElem("theSquares").style.opacity = "0%"
     cubeTr.set_active(true)
+    window.scrollTo(0,0)
 }
 
 function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination, snap, drop_function) {
@@ -186,6 +188,7 @@ function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination
       // otherwise, move the DIV from anywhere inside the DIV:
       elmnt.onmousedown = dragMouseDown;
     }
+    elmnt.style.zIndex = 1
 
     function fit_in_area()
     {
@@ -205,6 +208,7 @@ function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination
       window.addEventListener("resize", function(){
         fit_in_area()
         });
+        console.log("ouch")
     }
 
     function elementDrag(e) {
@@ -255,7 +259,11 @@ function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination
                     // otherwise, move the DIV from anywhere inside the DIV:
                     elmnt.onmousedown = null;
                 }
-                elmnt.src = dropped_img_url;
+                if (dropped_img_url != null)
+                    elmnt.src = dropped_img_url;
+                else
+                    elmnt.style.opacity = "0%"
+                elmnt.style.zIndex = 0
                 if (snap)
                 {
                     elmnt.style.marginTop = destination.offsetTop + "px";
@@ -273,7 +281,10 @@ function dragElement(elmnt, parent, moving_img_url, dropped_img_url, destination
 
     function closeDragElement() {
         if (!checkDestination())
+        {
             elmnt.src = old_url;
+
+        }
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;

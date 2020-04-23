@@ -117,11 +117,15 @@ function adventure4()
     triggers["4_tr12_5"].add_new_panel(getElem("4_12_5b"))
 
 
+
+    triggers["4_tr12_3"].add_new_panel(getElem("4_12_3b"))
+
     triggers["4_tr13"].add_new_trigger(triggers["4_tr13_02"])
     triggers["4_tr13"].add_new_panel(getElem("4_13"))
     triggers["4_tr13"].add_new_panel(getElem("4_13_01"))
     triggers["4_tr13"].add_new_panel(getElem("4_14_1"))
     triggers["4_tr13"].add_new_panel(getElem("4_14_2"))
+    triggers["4_tr13"].add_new_panel(getElem("4_14"))
 
     function hole(){
         triggers["4_tr13"].set_active(true)
@@ -133,9 +137,13 @@ function adventure4()
         dragElement(getElem("4_12_5"), getElem("drag_area_4_12_5"), "images/4/12_5_h.png", "images/4/12_5_d.png",getElem("drop_area_4_12_5"), false, hole);
     }
 
-    for (let index = 2; index < 10; index++) {
+    for (let index = 2; index < 24; index++) {
         let i = index;
-        let tr_id = "4_tr13_0" + i;
+        let tr_id;
+        if (i < 10)
+            tr_id = "4_tr13_0" + i;
+        else
+            tr_id = "4_tr13_" + i;
         triggers[tr_id].trObj.onclick = null;
         i += 1;
         if (i < 10)
@@ -153,6 +161,65 @@ function adventure4()
             triggers[tr_id].action()
             //triggers[tr_id].onmouseover = null;
         }
+    }
+    triggers["4_tr13_24"].add_old_panel(getElem("4_13_23"))
+    triggers["4_tr13_24"].new_panels = []
+    triggers["4_tr13_24"].add_new_trigger(triggers["4_tr14"])
+    triggers["4_tr13_24"].trObj.onclick = null;
+    triggers["4_tr13_24"].trObj.onmouseover = function(){
+        triggers["4_tr13_24"].action()
+    }
+    triggers["4_tr14"].new_panels = []
+    triggers["4_tr14"].add_old_panel(getElem("4_14"))
+    triggers["4_tr14"].trObj.onclick = null;
+    triggers["4_tr14"].trObj.onmouseover = function(){
+        set_opacity_tr(triggers["4_tr14_1"], triggers["4_tr15"], cave_opacity, 1, "4_14_1")
+        triggers["4_tr14"].action()
+    }
 
+    let cave_opacity = 0;
+
+    triggers["4_tr15"].add_new_panel(getElem("4_15_1"))
+    triggers["4_tr15"].add_new_trigger(triggers["4_tr16"])
+    triggers["4_tr16"].add_new_trigger(triggers["4_tr16_1"])
+
+    triggers["4_tr16_1"].add_new_panel(getElem("4_17"))
+    triggers["4_tr16_1"].add_new_trigger(triggers["4_tr17_1"])
+
+    triggers["4_tr17_1"].add_new_panel(getElem("4_17_2"))
+    triggers["4_tr17_1"].add_old_panel(getElem("4_17"))
+    triggers["4_tr17_1"].add_old_panel(getElem("4_15_1"))
+
+    triggers["4_tr17_1"].add_new_trigger(triggers["4_tr18"])
+
+    function put_eye()
+    {
+
+        getElem("4_18_1").style.opacity = "0%"
+        getElem("4_19").style.opacity = "100%"
+        triggers["4_tr22"].set_active(true)
+        console.log("eye_droped")
+    }
+
+    triggers["4_tr18"].add_new_panel(getElem("4_18_1"))
+    triggers["4_tr18"].trObj.onclick = function()
+    {
+        console.log("clicked")
+        dragElement(getElem("4_12_3b"), getElem("BG"), "images/4/12_3b.png", null ,getElem("drop_area_4_12_3"), false, put_eye);
+        triggers["4_tr18"].action()
+    }
+
+    triggers["4_tr22"].add_new_panel(getElem("4_21"))
+    triggers["4_tr22"].add_old_panel(getElem("4_19"))
+    triggers["4_tr22"].trObj.onclick = function()
+    {
+        triggers["4_tr22"].action()
+        triggers["4_tr22"].set_active(true)
+        triggers["4_tr22"].trObj.onclick = function()
+        {
+            url = save_adventure("adventure4")
+            window.open(url)
+            reset_adventure(4)
+        }
     }
 }

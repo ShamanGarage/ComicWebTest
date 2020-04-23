@@ -35,8 +35,17 @@ c4Tr.trObj.onclick =  function(){
     }
 }
 
+url = null
+
 getElem("facetoUX").onclick = function()
 {
-    save_adventure("adventure4")
+    url = save_adventure("adventure4")
+
+}
+
+
+getElem("shapesUX").onclick = function()
+{
+    window.open(url)
 }
 
