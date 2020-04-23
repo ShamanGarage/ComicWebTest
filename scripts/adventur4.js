@@ -85,9 +85,9 @@ function adventure4()
                         {
                             getElem("4_07b").style.opacity = "100%"
                             getElem("4_07_1").style.opacity = "100%"
-                            let imgList = ["07_2.png","07_3.png","07_4.png"]
+                            let imgList = ["4_07_1", "4_07_2","4_07_3","4_07_4"]
                             triggers["4_tr07"].set_active(true)
-                            set_image_sequence_tr(triggers["4_tr07"], triggers["4_tr08"], "images/4/" ,imgList, 3, mountainIndex, getElem("4_07_1"))
+                            set_image_sequence_tr(triggers["4_tr07"], triggers["4_tr08"], imgList, 4, mountainIndex)
                             triggers["4_tr07b"].set_active(false)
                         }
                     }
@@ -101,9 +101,9 @@ function adventure4()
     //Ahora toca el zoom a la puerta y romperla
     triggers["4_tr08"].add_new_panel(getElem("4_09_1"))
     triggers["4_tr08"].add_new_trigger(triggers["4_tr09"])
-    let doorImg = ["09_2.png","09_3.png", "09_4.png","09_5.png"]
+    let doorImg = ["4_09_1","4_09_2","4_09_3", "4_09_4","4_09_5"]
     let doorIndex
-    set_image_sequence_tr(triggers["4_tr09"], triggers["4_tr10"], "images/4/", doorImg, 4, doorIndex, getElem("4_09_1"))
+    set_image_sequence_tr(triggers["4_tr09"], triggers["4_tr10"], doorImg, 5, doorIndex)
 
     triggers["4_tr10"].add_new_trigger(triggers["4_tr10_1"])
     triggers["4_tr10_1"].add_new_trigger(triggers["4_tr10_2"])
@@ -131,10 +131,12 @@ function adventure4()
         triggers["4_tr13"].set_active(true)
     }
 
+    rocoso_drag_reset = null;
+
     triggers["4_tr12_5"].trObj.onclick = function()
     {
         triggers["4_tr12_5"].action();
-        dragElement(getElem("4_12_5"), getElem("drag_area_4_12_5"), "images/4/12_5_h.png", "images/4/12_5_d.png",getElem("drop_area_4_12_5"), false, hole);
+        rocoso_drag_reset = dragElement(getElem("4_12_5"), getElem("drag_area_4_12_5"), "images/4/12_5_h.png", "images/4/12_5_d.png",getElem("drop_area_4_12_5"), false, hole);
     }
 
     for (let index = 2; index < 24; index++) {
@@ -198,19 +200,23 @@ function adventure4()
         getElem("4_18_1").style.opacity = "0%"
         getElem("4_19").style.opacity = "100%"
         triggers["4_tr22"].set_active(true)
+        getElem("4_20").style.opacity = "100%"
         console.log("eye_droped")
     }
+
+    var ojo_drag_reset = null
 
     triggers["4_tr18"].add_new_panel(getElem("4_18_1"))
     triggers["4_tr18"].trObj.onclick = function()
     {
         console.log("clicked")
-        dragElement(getElem("4_12_3b"), getElem("BG"), "images/4/12_3b.png", null ,getElem("drop_area_4_12_3"), false, put_eye);
+        ojo_drag_reset = dragElement(getElem("4_12_3b"), getElem("BG"), "images/4/12_3b.png", null ,getElem("drop_area_4_12_3"), false, put_eye);
         triggers["4_tr18"].action()
     }
 
     triggers["4_tr22"].add_new_panel(getElem("4_21"))
     triggers["4_tr22"].add_old_panel(getElem("4_19"))
+    triggers["4_tr22"].add_old_panel(getElem("4_20"))
     triggers["4_tr22"].trObj.onclick = function()
     {
         triggers["4_tr22"].action()
@@ -220,6 +226,8 @@ function adventure4()
             url = save_adventure("adventure4")
             window.open(url)
             reset_adventure(4)
+            rocoso_drag_reset()
+            ojo_drag_reset()
         }
     }
 }
