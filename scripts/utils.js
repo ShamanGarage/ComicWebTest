@@ -33,7 +33,6 @@ class Trigger{
     {
         this.old_triggers.forEach(element => {
             element.set_active(state);
-            element.trObj.style.zIndex = 1;
         });
     }
     add_new_trigger(tr)

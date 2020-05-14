@@ -59,7 +59,6 @@ body {
     left: 0;
     width: 100%; /* Full width */
     height: 20%;
-    z-index: 0;
 }
 .sideBar{
     left:0;
@@ -74,7 +73,6 @@ body {
 {
     display: inline-block;
     max-height: 100%;
-    z-index: 2;
 }
 
 .navDot
