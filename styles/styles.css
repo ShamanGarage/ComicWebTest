@@ -27,28 +27,28 @@ body {
 .panel {
     position: absolute;
     max-width: 100%;
-    opacity: 0%;
+    opacity: 10%;
     z-index: 0;
 }
 
 .dragable {
     cursor: move;
     position: absolute;
-    opacity: 0%;
+    opacity: 10%;
     z-index: 10;
 }
 
 .trigger {
     cursor: pointer;
     position: absolute;
-    opacity: 0%;
+    opacity: 10%;
     z-index: -1;
 }
 
 .drag_area
 {
     position: absolute;
-    opacity: 0%;
+    opacity: 10%;
     z-index: -1;
 }
 

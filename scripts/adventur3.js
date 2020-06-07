@@ -85,6 +85,28 @@ function adventure3()
     triggers["3_tr07_2"].add_new_trigger(triggers["3_tr07_3"])
     triggers["3_tr07_3"].add_new_trigger(triggers["3_tr07_4"])
     triggers["3_tr07_4"].add_new_trigger(triggers["3_tr07_5"])
+    triggers["3_tr07_5"].add_new_trigger(triggers["3_tr08"])
+    triggers["3_tr08"].add_new_trigger(triggers["3_tr08_1"])
 
+    triggers["3_tr08_1"].add_new_trigger(triggers["3_tr08_2"])
+    triggers["3_tr08_2"].add_new_trigger(triggers["3_tr08_3"])
+    triggers["3_tr08_3"].add_new_trigger(triggers["3_tr08_4"])
+    triggers["3_tr08_4"].add_new_trigger(triggers["3_tr08_5"])
+    triggers["3_tr08_5"].add_new_trigger(triggers["3_tr09_1"])
+    triggers["3_tr09_1"].add_new_panel(getElem("3_09_2"))
 
+    function organs(){
+        console.log("organos")
+    }
+
+    organs_drag_reset = null;
+
+    triggers["3_tr09_1"].trObj.onclick = function()
+    {
+        if (triggers["3_tr09_1"].active)
+        {
+            triggers["3_tr09_1"].action();
+            rocoso_drag_reset = dragElement(getElem("3_09_1"), getElem("drag_area_3_09_1"), "images/3/09_1.png", "images/3/09_1.png",getElem("drop_area_3_09_1"), false, organs);
+        }
+    }
 }
