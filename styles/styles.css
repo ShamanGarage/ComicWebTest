@@ -34,21 +34,21 @@ body {
 .dragable {
     cursor: move;
     position: absolute;
-    opacity: 10%;
+    opacity: 0%;
     z-index: 10;
 }
 
 .trigger {
     cursor: pointer;
     position: absolute;
-    opacity: 10%;
+    opacity: 0%;
     z-index: -1;
 }
 
 .drag_area
 {
     position: absolute;
-    opacity: 10%;
+    opacity: 0%;
     z-index: -1;
 }
 
